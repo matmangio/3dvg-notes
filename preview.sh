@@ -1,0 +1,1 @@
+bundle exec jekyll serve --livereload -o --drafts --trace

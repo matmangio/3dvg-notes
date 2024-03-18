@@ -1,0 +1,29 @@
+---
+title: Print
+layout: default
+---
+
+<div>
+    {% assign posts = site.posts | sort: 'date' %}
+    {% for post in posts %}
+        <div class="print-post" style="text-align: justify; text-justify: inter-word;">
+            <h1>{{ post.title }}</h1>
+                {{ post.content }}
+            <hr>
+            <br>
+        </div>
+    {% endfor %}
+</div>
+
+<script type="text/javascript">
+    //Wait for latex to render, then print
+    MathJax.Hub.Queue(
+        ["Typeset",MathJax.Hub],
+        function () {
+          window.print();
+          setTimeout(() => {
+              history.back(); 
+          }, 500);
+        }
+    );
+</script>
