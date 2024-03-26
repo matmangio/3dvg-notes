@@ -1,5 +1,5 @@
 ---
-title: Points, vectors and versors
+title: Vector algebra
 ---
 
 Every 3D video game needs to handle the placing of objects, items and characters in a 3D environment: to do so, it will need a way to manage the position of these elements and their movement in the scene.
@@ -7,7 +7,7 @@ It needs, in short, a representation of **points** (positions), **vectors** (mov
 
 Before seeing how these mathematical elements are handled in 3D video games, though, we need to recall how they are defined, how they differ from one another and how they behave from a purely algebraical standpoint.
 
-## Vector algebra
+## Definitions
 
 **Points** are positions in the 3D space: given a certain cartesian coordinate system, they are identified by their **coordinates** on the $$x$$, $$y$$ and $$z$$ axes.
 Usually represented by uppercase letters, they can be described by listing their coordinates in the $$x$$, $$y$$, $$z$$ order:
@@ -44,7 +44,7 @@ $$B = A + \vec{v}$$
 These sums and differences of points and vectors have the same properties of sum and differences of scalars: they are cumulative and associative.
 We'll see that most vector operations follow the same rules of their scalar counterparts, with a few notable exceptions.
 
-### Scaling
+## Scaling
 
 Let's start with the easiest operation: **scaling**.
 This means taking a vector and multiplying it by a scalar, and has the effect of modifying the vector's length among all axes:
@@ -56,7 +56,7 @@ $$k\vec{v} = \begin{pmatrix}kv_x \cr kv_x \cr kv_x\end{pmatrix}$$
 As we can see in the figure, scaling by a negative factor *inverts the vector direction*: if the scaling factor is exactly $$-1$$ we get the so called **opposite** vector.
 Instead, scaling a vector by a factor of $$0$$ turns it in the **degenerate vector** $$\vec{0}$$: this is a vector that has no direction nor length and doesn't actually represent a movement.
 
-### Sum and difference
+## Sum and difference
 
 Vector **sum** represents the **concatenation of the movements represented by the two vectors**: the result is a vector describing the total movement an object takes when following the two vectors consecutively.
 It is obtained by summing the individual components and is visually obtained by positioning the tail of the second vector on the point of the first one and connecting the tail of the first to the point of the second (*aka the parallelogram rule*):
@@ -74,7 +74,7 @@ $$\vec{v} - \vec{w} = \begin{pmatrix}v_x - w_x \cr v_y - w_y \cr v_z - w_z \end{
 
 As already said before, vector sum and difference follow the same rules as scalar sum and difference, in that the sum is commutative and associative while the difference is only associative.
 
-### Norm
+## Norm
 
 Due to representing movements, vectors have an innate *length* better know as their **norm**: indicated by double pipe symbols around the name of the vector, it represents how much an object would travel in space if moved by the aforementioned vector.
 Applying Pythagoras' theorem it can be easily demonstrated that this measure is obtained by squaring the components of the vector, adding them together and calculating the square root of the result:
@@ -90,7 +90,7 @@ We can also note that the norm of a scaled vector is the product of the scale by
 
 $$||k\vec{v}|| = k \cdot ||\vec{v}||$$
 
-#### Versors
+### Versors
 
 Having introduced the concept of norm we can define **versors**: they can be imagined as vectors of norm $$1$$ that are used to represent **directions** rather than movements.
 Identified by a lowercase letter with a cap on it, they cannot be scaled since they have no length for scaling:
@@ -103,7 +103,7 @@ $$\frac{\vec{v}}{||\vec{v}||} = \hat{d}$$
 
 Of course normalization can fail if the length of the original vector was $$0$$: this is, however, an acceptable edge case since the direction of the degenerate vector $$\vec{0}$$ isn't really defined.
 
-### Dot product
+## Dot product
 
 Let's now introduce the first operation that's specific to vectors and versors: the **dot product**.
 Sometimes called *inner product* and represented by a dot, the dot product is an operation which returns a **scalar** obtained by multiplying the components of the two vectors one by one and summing the results:
@@ -115,20 +115,20 @@ We can also note that by the aforementioned formula, the dot product of a vector
 
 $$\vec{v} \cdot \vec{v} = {||\vec{v}||}^2$$
 
-More interestingly, though, the dot product can be demonstrated to be equal to *the product of the norms of the two vectors and the cosign of the angle $$\alpha$$ between them*:
+More interestingly, though, the dot product can be demonstrated to be equal to *the product of the norms of the two vectors and the cosine of the angle $$\alpha$$ between them*:
 
-$$\vec{v} \cdot \vec{w} = ||\vec{v}|| \cdot ||\vec{w}|| \cdot \cos(\alpha)$$
+$$\bf{\vec{v} \cdot \vec{w} = ||\vec{v}|| \cdot ||\vec{w}|| \cdot \cos(\alpha)}$$
 
 {% include responsive-image.html path="assets/images/01_DotProduct.png" alt="Representation of the angle between two vectors used for the dot product" %}
 
-Due to the nature of the cosign, this alternative formula gives us so many interesting interpretations and observations about the dot product:
+Due to the nature of the cosine, this alternative formula gives us so many interesting interpretations and observations about the dot product:
 
 - Assuming neither vector is degenerate, **a dot product of $$\bf{0}$$ means the two vectors/versors are orthogonal**.
     On the other hand, a *positive value of the dot product represents an acute angle between the vectors/versors*, while a *negative value an obtuse angle*.
 
     $$\vec{v} \cdot \vec{w} = 0 \longleftrightarrow \vec{v} \perp \vec{w}$$
 
-- Given two **versors**, the dot product is the **cosign of the angle between them** since their norm is $$1$$.
+- Given two **versors**, the dot product is the **cosine of the angle between them** since their norm is $$1$$.
     This makes it also a measure of **similarity** between the two directions, with values spanning from $$-1$$ (*opposite directions*) to $$1$$ (*same direction*).
 
     $$
@@ -136,7 +136,7 @@ Due to the nature of the cosign, this alternative formula gives us so many inter
     \hat{v} \cdot \hat{w} \in [-1, 1]
     $$
 
-- The dot product of a **vector with a versor** is the **projection of the vector on the direction of the versor**: this is due to the trigonometric definition of cosign as the ratio of the length of the hypotenuse and the length of the adjacent cathetus.
+- The dot product of a **vector with a versor** is the **projection of the vector on the direction of the versor**: this is due to the trigonometric definition of cosine as the ratio of the length of the hypotenuse and the length of the adjacent cathetus.
 
     $$\vec{v} \cdot \hat{d} = ||\vec{v}|| \cdot \cos(\alpha) = v_d$$
 
@@ -146,13 +146,77 @@ As we could have guessed from its definition, the dot product is a **commutative
 This characteristics also allow us to demonstrate a result regarding the *norm of the sum of two vectors*, which is not the sum of the norms:
 
 $$
-||\vec{v} + \vec{w}||^2 = (\vec{v} + \vec{w}) \cdot (\vec{v} + \vec{w}) = \vec{v} \cdot \vec{v} + \vec{v} \cdot \vec{w} + \vec{w} \cdot \vec{v} + \vec{w} \cdot \vec{w} =  \bf{||\vec{v}||^2 + ||\vec{w}|| + 2 (\vec{v} \cdot \vec{w})}
+||\vec{v} + \vec{w}||^2 = (\vec{v} + \vec{w}) \cdot (\vec{v} + \vec{w}) = \vec{v} \cdot \vec{v} + \vec{v} \cdot \vec{w} + \vec{w} \cdot \vec{v} + \vec{w} \cdot \vec{w} =  \bf{||\vec{v}||^2 + ||\vec{w}||^2 + 2 (\vec{v} \cdot \vec{w})}
 $$
 
-## Interpolation
+The dot product is also **distributive** with regards to the sum of vectors:
 
-### Normalized interpolation
-
-### Spherical interpolation
+$$(\vec{v} + \vec{w}) \cdot \vec{u} = \vec{v} \cdot \vec{u} + \vec{w} \cdot \vec{u}$$
 
 ## Cross product
+
+Following the dot product we now introduce a new kind of product between vectors that instead of resulting in a scalar returns a **vector** instead: we're talking about the **cross product**.
+Indicated by the $$\times$$ symbol, the cross product is only defined in 3D: this is because it produces a vector that is guaranteed to be **orthogonal to the plane containing the factors**, meaning it is **orthogonal to both vectors**.
+
+$$\vec{u} = \vec{v} \times \vec{w} \longrightarrow \vec{u} \perp \vec{v} \; \text{ and } \; \vec{u} \perp \vec{w}$$
+
+More specifically, the cross product is defined as such:
+
+$$\vec{v} \times \vec{w} = \begin{pmatrix}v_y w_z - v_z w_y \cr v_z w_x - v_x w_z \cr v_x w_y - v_y w_x\end{pmatrix}$$
+
+To help remember this formula we can imagine putting the components of the two vectors in a matrix: now, each entry of the cross product is produced by calculating *the determinant of the matrix obtained by removing the corresponding line* from the one we just built, making sure that for the $$y$$ coordinate we start from the $$v_z$$ component.
+
+$$
+\begin{bmatrix}v_x & w_x \cr v_y & w_y \cr v_z & w_z \end{bmatrix} \longrightarrow u_x = D\begin{bmatrix} v_y & w_y \cr v_z & w_z\end{bmatrix}, u_y = D\begin{bmatrix} v_z & w_z \cr v_x & w_x\end{bmatrix}, u_z = D\begin{bmatrix}v_x & w_x \cr v_y & w_y \end{bmatrix}
+$$
+
+Similarly to the dot product, though, there are simplified ways to find the direction and length of the resulting vector.
+Starting with the latter, it can be demonstrated that:
+
+$$\bf{||\vec{v} \times \vec{w}|| = ||\vec{v}|| \cdot ||\vec{w}|| \cdot \sin(\alpha)}$$
+
+where $$\alpha$$ is as usual the angle between the two vectors; in order to prevent the norm of the vector from being negative (which wouldn't make any sense), this angle is defined to be $$\alpha \in [0°, 180°]$$ and in case it is larger we simply take the opposite angle.
+However, this alternative formula gives much insight in the possible interpretation of the norm of the cross product between two vectors:
+
+- The norm of the cross product of **two versors** is exactly the **sine of the angle** between them.
+    Note that the resulting vector is *usually not a versor*, since the sine has value 1 only in $$90°$$: this means the resulting vector will be a versor if and only if the starting versors were orthogonal.
+    In any other case, if we want to obtain a versor orthogonal to two other ones, for example when calculating the normal of a triangle in 3D, we need to *normalize the result*:
+
+    $$\hat{n} = \frac{\hat{d} \times \hat{c}}{||\hat{d} \times \hat{c}||} = \frac{\hat{d} \times \hat{c}}{\sin(\alpha)}$$
+
+- Following the previous point, the norm of the cross product of two **versors** can be taken as a measure of **orthogonality** (or *collinearity*, if you wish): the value ranges from $$0$$ when the two versors are collinear (either the same or opposite) to $$1$$ when they are orthogonal.
+    As a test of collinearity it works also for vectors: note that two collinear vector will have a **degenerate vector** as their cross product, which makes a lot of sense since there is an infinite number of vectors that are orthogonal to two vectors on the same line.
+
+    $$\hat{d} \times \hat{c} \in [0, 1]$$
+
+    Note how, in that sense, the cross product of a vector with itself is *always the degenerate vector*: a vector is always perfectly collinear with itself, so the sine of the angle always results to be zero.
+
+    $$\vec{v} \times \vec{v} = \vec{0} \qquad  \forall \, \vec{v} \in \mathbb{R}^3$$
+
+- Analyzing things from a geometric perspective, the norm of the cross product between two vectors is also equal to the **area of the parallelogram** created by pointing both vectors in the same point; alternative, it is *double the area of the triangle* created by the same vectors.
+    This is because multiplying one of the vector's norm by the sine of the angle $$\alpha$$ returns the height of the parallelogram, while the other vector's norm serves as the base:
+
+{% include responsive-image.html path="assets/images/01_CrossParallelogram.png" alt="Representation of the parallelogram's area" max-width="220px"%}
+
+Another thing that is left to define is, however, the **direction** of the cross product: if it is true that the resulting vector is orthogonal to both factors and to the plane they share, we still need to understand if it is pointed "above" or "below" that plane.
+To better understand this we can use the **handedness** of our reference cartesian frame, which is a way to interpret how the three orthonormal axes that compose it are positioned in relation to one another: in particular, they can be either *left-handed*, meaning the positive direction for the $$x$$ is left of the other two axes, or *right-handed*, meaning the positive direction for the $$x$$ is right from the other axes (*the most common*).
+The naming structure comes from the fact that, as seen in the figure below, the placing of the axes can be obtained by sticking out the first three fingers of the left or right hand respectively.
+
+{% include responsive-image.html path="assets/images/01_Handedness.png" alt="Representation of the handedness rule" caption="Left-handed frame on the left, right-handed frame on the right" max-width="500px"%}
+
+To account for this difference in interpretation, the cross product is defined to follow the same rule for positioning so that $$\hat{x} \times \hat{y} = \hat{z}$$ regardless of the handedness of the reference frame.
+So the direction of the cross product can be understood as such: taking the *hand indicated by the handedness of the frame* and *pointing the vectors with the thumb and index fingers*, the cross product has the **same direction as the middle finger**.
+
+This rule, however, makes the cross product not only *not commutative*, but instead **anti-commutative**: inverting the order of the vectors yields the **opposite vector**.
+This is because changing the order in which each finger is pointed requires a hand rotation, resulting in the direction being the exact opposite.
+
+$$\bf{\vec{v} \times \vec{w}} = -(\vec{w} \times \vec{v})$$
+
+Despite this, some nice properties still apply: the cross product is **associative with scalars** and **distributive with the sum**, although we need to be very careful with the ordering of operands.
+The same care is required for a sort of associative-ness with the dot product, where some operands can be shifted around a bit: this is also sometimes referred to as the **triple product** and gives the volume of the parallelepiped created by the three vectors or, alternatively, the determinant of the $$3 \times 3$$ matrix created with their components.
+
+$$
+k(\vec{a} \times \vec{b}) = (k\vec{a}) \times \vec{b} \\
+(\vec{a} + \vec{b}) \times \vec{c} = \vec{a} \times \vec{c} + \vec{b} \times \vec{c} \\
+(\vec{a} \times \vec{b}) \cdot \vec{c} = (\vec{c} \times \vec{a}) \cdot \vec{b}
+$$
