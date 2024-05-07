@@ -13,13 +13,15 @@ layout: default
   {%- if site.posts.size > 0 -%} 
     <ul class="post-list">
       {% assign posts = site.posts | sort: 'date' %}
+      {% assign num = 0 %}
       {%- for post in posts -%}
+        {% assign num = num | plus: 1 %}
         <li>
           {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
           <span class="post-meta">{{ post.date | date: date_format }}</span>
           <h3>
             <a class="post-link" href="{{ post.url | relative_url }}">
-              {{ post.title | escape }}
+              [{{ num }}] {{ post.title | escape }}
             </a>
           </h3>
           {%- if site.show_excerpts -%}
