@@ -16,7 +16,7 @@ layout: default
   </header>
 
   <div class="post-content e-content" itemprop="articleBody" style="text-align: justify; text-justify: inter-word;">
-    {% include toc.html html=content %}
+    {% include toc.html html=content sanitize=true %}
     {{ content }}
   </div>
 
