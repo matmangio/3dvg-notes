@@ -1,6 +1,6 @@
 # 3D Video Games notes
 
-This repository contains my notes for the 3D Video Games course at University of Milan, written in Markdown and published as a Github Pages site through Jekyll.
+This repository contains my notes for the 3D Video Games course at University of Milan, written in Markdown and published as a Github Pages site through Jekyll (wip).
 
 ## Compiling from source
 
