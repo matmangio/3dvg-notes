@@ -1,5 +1,5 @@
 <figure class="responsive-image">
-    <img src="/{{ include.path }}" alt="{{ include.alt }}" width="100%" {% if include.max-width %} style="max-width: {{ include.max-width }};" {% endif %}>
+    <img src="/{{ include.path }}" alt="{{ include.alt }}" width="100%" {% if include.max-width %} style="max-width: {{ include.max-width }};" {% endif %} {% if include.max-height %} style="max-height: {{ include.max-height }};" {% endif %}>
     {% if include.caption %}
         <figcaption><i>{{ include.caption }}</i></figcaption>
     {% endif %}
