@@ -16,10 +16,17 @@ layout: default
 </div>
 
 <script type="text/javascript">
-    //Wait for latex to render, then print
+    // Show alert message
+    var alert = document.createElement("div");
+    alert.setAttribute("style","position:absolute;top: 10%; left: 0; right:0; margin-left: auto; margin-right: auto; width: 300px;text-align:center; padding: 4px; background-color:gray; color:white;");
+    alert.innerHTML = "Please wait, we're preparing your pdf...";
+    document.body.appendChild(alert);
+
+    //Wait for latex to render, then print    
     MathJax.Hub.Queue(
         ["Typeset",MathJax.Hub],
         function () {
+          alert.parentNode.removeChild(alert);
           window.print();
           setTimeout(() => {
               history.back(); 
